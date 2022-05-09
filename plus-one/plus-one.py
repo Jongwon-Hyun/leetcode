@@ -1,5 +1,6 @@
 class Solution:
     def plusOne(self, digits: List[int]) -> List[int]:
+# Formal
 #         num = 0
 #         for digit in digits:
 #             num = num * 10 + digit
@@ -14,7 +15,8 @@ class Solution:
 
 #         result.reverse()
 #         return result
-
+        
+        # simple
         num = int("".join(map(str, digits)))
         num += 1
         return [int(digit) for digit in str(num)]
