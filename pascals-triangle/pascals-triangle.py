@@ -2,6 +2,8 @@ class Solution:
     def generate(self, numRows: int) -> List[List[int]]:
         result = []
 
+        if numRows == 0:
+            return([])
         if numRows == 1:
             return([[1]])
         elif numRows == 2:
