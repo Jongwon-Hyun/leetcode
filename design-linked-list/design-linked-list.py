@@ -2,6 +2,7 @@ class Node:
     def __init__(self, val):
         self.val = val
         self.next = None
+        self.prev = None
         
 class MyLinkedList:
 
@@ -35,7 +36,11 @@ class MyLinkedList:
 
     def addAtHead(self, val: int) -> None:
         node = Node(val)
-        node.next = self.head
+        if self.size == 0:
+            node.prev, node.next = None, None
+        else:
+            node.prev, node.next, self.head.prev = None, self.head, node
+            
         self.head = node
         self.size += 1
 
@@ -45,38 +50,43 @@ class MyLinkedList:
         else:
             node = Node(val)
             tail_node = self.__findNode(self.size - 1)
-            tail_node.next = node
+            tail_node.next, node.prev, node.next = node, tail_node, None
             self.size += 1
 
     def addAtIndex(self, index: int, val: int) -> None:
-        if index == self.size:
+        if index == self.size: 
             self.addAtTail(val)
         elif index == 0:
             self.addAtHead(val)
         else:
-            prev_node = self.__findNode(index - 1)
-            if prev_node is None:
+            index_node = self.__findNode(index)
+            if index_node is None:
                 return
-            
+
             node = Node(val)
-            node.next = prev_node.next
-            prev_node.next = node
+            node.prev, node.next = index_node.prev, index_node
+            index_node.prev.next, index_node.prev = node, node
             self.size += 1
         
     def deleteAtIndex(self, index: int) -> None:
+        if self.size <= index:
+            return
         if index == 0:
-            node = self.head
-            self.head = node.next
-            node = None
+            if self.head.next:
+                self.head.next.prev, self.head = None, self.head.next
+            else:
+                self.head = None
             self.size -= 1
         else:
-            prev_node = self.__findNode(index - 1)
-            node = self.__findNode(index)
-            if node is None:
+            find_node = self.__findNode(index)
+            if find_node is None:
                 return
-     
-            prev_node.next = node.next
-            node = None
+            
+            if find_node.next:
+                find_node.prev.next, find_node.next.prev = find_node.next, find_node.prev
+            else:
+                find_node.prev.next = None
+              
             self.size -= 1
         
         
