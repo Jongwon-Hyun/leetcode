@@ -8,33 +8,17 @@ class Solution:
         sum_head = ListNode(0)
         cursor = sum_head
         up = 0
-        while l1 and l2:
-            sum_val = up + l1.val + l2.val
+        while l1 or l2:
+            l1_val = l1.val if l1 else 0
+            l2_val = l2.val if l2 else 0
+            sum_val = up + l1_val + l2_val
             up = sum_val // 10
             digit = sum_val % 10
             
             cursor.next = ListNode(digit)
             cursor = cursor.next
-            l1,l2 = l1.next,l2.next
-        
-        if l1:
-            while l1:
-                sum_val = up + l1.val
-                up = sum_val // 10
-                digit = sum_val % 10
-                
-                cursor.next = ListNode(digit)
-                cursor = cursor.next
-                l1 = l1.next
-        elif l2:
-            while l2:
-                sum_val = up + l2.val
-                up = sum_val // 10
-                digit = sum_val % 10
-                
-                cursor.next = ListNode(digit)
-                cursor = cursor.next
-                l2 = l2.next
+            l1 = l1.next if l1 else None
+            l2 = l2.next if l2 else None
         
         if up:
             cursor.next = ListNode(up)
