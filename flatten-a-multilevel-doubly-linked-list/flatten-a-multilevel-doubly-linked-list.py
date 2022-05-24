@@ -10,20 +10,20 @@ class Node:
 
 class Solution:
     def flatten(self, head: 'Optional[Node]') -> 'Optional[Node]':
-        if not head:return None
-        nodes = []
-        def dfs(node):
-            if node is None:return
-            nodes.append(node)
-            if node.child:dfs(node.child)
-            if node.next:dfs(node.next)
-        dfs(head)
-        head = nodes[0]
-        head.child=None
-        for i in range(1, len(nodes)):
-            node = nodes[i]
-            prev = nodes[i-1]
-            node.child=None
-            node.prev=prev
-            prev.next = node
+        curr = head
+
+        while curr:
+          if curr.child:
+            cachedNext = curr.next
+            curr.next = curr.child
+            curr.child.prev = curr
+            curr.child = None
+            tail = curr.next
+            while tail.next:
+              tail = tail.next
+            tail.next = cachedNext
+            if cachedNext:
+              cachedNext.prev = tail
+          curr = curr.next
+
         return head
