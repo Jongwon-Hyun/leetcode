@@ -63,10 +63,7 @@ class MyCircularQueue:
             return True
         
         return False
-    
-     # 4 7 2 5
-     #   h    
-     # t    
+
 
 # Your MyCircularQueue object will be instantiated and called as such:
 # obj = MyCircularQueue(k)
